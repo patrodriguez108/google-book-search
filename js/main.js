@@ -10,15 +10,19 @@ document.getElementById('book-search').addEventListener('submit', function() {
 
     if (data.items !== undefined) {
       data.items.forEach(function(result) {
+        let title = result.volumeInfo.title
+        let authors = result.volumeInfo.authors
         let publisher = result.volumeInfo.publisher
+        let imageUrl = result.volumeInfo.imageLinks.smallThumbnail
+        let moreInfoLink = result.volumeInfo.infoLink
 
         output += `
           <div>
-            <h3>${result.volumeInfo.title}</h3>
-            <p>Authors: ${result.volumeInfo.authors}</p>
+            <h3>${title}</h3>
+            <p>Authors: ${authors}</p>
             <p>Publisher: ${publisher !== undefined ? publisher : "No publisher listed"}</p>
-            <img src=${result.volumeInfo.imageLinks.smallThumbnail}>
-            <p><a href=${result.volumeInfo.infoLink}>More Information</a></p>
+            <img src=${imageUrl}>
+            <p><a href=${moreInfoLink}>More Information</a></p>
           </div>
         `;
       })
