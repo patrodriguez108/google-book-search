@@ -7,14 +7,16 @@ document.getElementById('book-search').addEventListener('submit', function() {
   .then((response) => response.json())
   .then((data) => {
     let output = "<h2>Results</h2>"
-    
+
     if (data.items !== undefined) {
       data.items.forEach(function(result) {
+        let publisher = result.volumeInfo.publisher
+
         output += `
           <div>
             <h3>${result.volumeInfo.title}</h3>
             <p>Authors: ${result.volumeInfo.authors}</p>
-            <p>Publisher: ${result.volumeInfo.publisher}</p>
+            <p>Publisher: ${publisher !== undefined ? publisher : "No publisher listed"}</p>
             <img src=${result.volumeInfo.imageLinks.smallThumbnail}>
             <p><a href=${result.volumeInfo.infoLink}>More Information</a></p>
           </div>
