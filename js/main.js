@@ -1,3 +1,18 @@
+function showAuthors(authorSource) {
+  if (authorSource.length > 1) {
+    let authorHeader = "<p>Authors:</p>";
+
+    authorSource.forEach(function(author) {
+      authorHeader += `<p>${author}</p>`
+    });
+
+    return authorHeader;
+  }
+  else {
+    return `<p>Author: ${authorSource}</p>`;
+  };
+};
+
 function showPublisher(publisherSource) {
   if (publisherSource !== undefined) {
     return `<p>Publisher: ${publisherSource}</p>`;
@@ -30,7 +45,7 @@ function displayResults(sourceData) {
       output += `
         <div>
           <h3>${title}</h3>
-          <p>Author(s): ${authors}</p>
+          ${showAuthors(authors)}
           ${showPublisher(publisher)}
           ${showImage(imageUrl)}
           <p><a href=${moreInfoLink}>More Information</a></p>
