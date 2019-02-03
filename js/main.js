@@ -1,16 +1,81 @@
-$(document).ready(function() {
-  $("#button").on("click", function() {
-    var search = $("#search").val()
-    document.getElementById('results').innerHTML = ""
+function showAuthors(authorSource) {
+  if (authorSource.length > 1) {
+    let authorHeader = "<p>Authors:</p>";
 
-    $.ajax({
-      method: "GET",
-      url: "https://www.googleapis.com/books/v1/volumes?q=" + search,
-      dataType: "json"
-    }).done(function(response) {
-      for(var i = 0; i < response.items.length; i++) {
-        results.innerHTML += "<h2>" + response.items[i].volumeInfo.title + "</h2>" + "<p>Authors: " + response.items[i].volumeInfo.authors + "</p>" + "<p>Publisher: " + response.items[i].volumeInfo.publisher + "</p>" + "<img src=" + response.items[i].volumeInfo.imageLinks.smallThumbnail + ">" + "<a href=" + response.items[i].volumeInfo.infoLink + ">" + "More Information</a>" 
-      }
+    authorSource.forEach(function(author) {
+      authorHeader += `<p>${author}</p>`
+    });
+
+    return authorHeader;
+  }
+  else {
+    return `<p>Author: ${authorSource}</p>`;
+  };
+};
+
+function showPublisher(publisherSource) {
+  if (publisherSource !== undefined) {
+    return `<p>Publisher: ${publisherSource}</p>`;
+  }
+  else {
+    return "<p>No publisher listed</p>";
+  };
+};
+
+function showImage(imageSource) {
+  if (imageSource !== undefined) {
+    return `<img src=${imageSource}>`;
+  }
+  else {
+    return "<p>No image available</p>";
+  };
+};
+
+function displayResults(sourceData) {
+  let output = "<h2>Results</h2>"
+
+  if (sourceData !== undefined) {
+    sourceData.forEach(function(result) {
+      let title = result.volumeInfo.title
+      let authors = result.volumeInfo.authors
+      let publisher = result.volumeInfo.publisher
+      let imageUrl = result.volumeInfo.imageLinks.smallThumbnail
+      let moreInfoLink = result.volumeInfo.infoLink
+
+      output += `
+        <div>
+          <h3>${title}</h3>
+          ${showAuthors(authors)}
+          ${showPublisher(publisher)}
+          ${showImage(imageUrl)}
+          <p><a href=${moreInfoLink}>More Information</a></p>
+        </div>
+      `;
     })
+  }
+
+  else {
+    output += "<h3>No Results</h3>"
+  };
+
+  document.getElementById("results").innerHTML = output
+};
+
+function fetchData(source) {
+  fetch(source)
+  .then((response) => response.json())
+  .then((data) => {
+
+    displayResults(data.items);
+
   })
-})
+  .catch((error) => console.log(error))
+};
+
+document.getElementById("book-search").addEventListener("submit", function() {
+  event.preventDefault();
+  let search = document.getElementById("search").value
+  let url = "https://www.googleapis.com/books/v1/volumes?q=" + search
+
+  fetchData(url);
+});
