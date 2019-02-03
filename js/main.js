@@ -1,16 +1,21 @@
 function showAuthors(authorSource) {
-  if (authorSource.length > 1) {
-    let authorHeader = "<p>Authors:</p>";
+  if (authorSource !== undefined) {
+    if (authorSource.length > 1) {
+      let authorsDisplay = "<p>Authors:</p>";
 
-    authorSource.forEach(function(author) {
-      authorHeader += `<p>${author}</p>`
-    });
+      authorSource.forEach(function(author) {
+        authorsDisplay += `<p>${author}</p>`
+      });
 
-    return authorHeader;
+      return authorsDisplay;
+    }
+    else {
+      return `<p>Author: ${authorSource}</p>`;
+    };
   }
   else {
-    return `<p>Author: ${authorSource}</p>`;
-  };
+    return "<p>No author listed</p>"
+  }
 };
 
 function showPublisher(publisherSource) {
@@ -24,7 +29,7 @@ function showPublisher(publisherSource) {
 
 function showImage(imageSource) {
   if (imageSource !== undefined) {
-    return `<img src=${imageSource}>`;
+    return `<img src=${imageSource.smallThumbnail}>`;
   }
   else {
     return "<p>No image available</p>";
@@ -39,7 +44,7 @@ function displayResults(sourceData) {
       let title = result.volumeInfo.title
       let authors = result.volumeInfo.authors
       let publisher = result.volumeInfo.publisher
-      let imageUrl = result.volumeInfo.imageLinks.smallThumbnail
+      let imageUrl = result.volumeInfo.imageLinks
       let moreInfoLink = result.volumeInfo.infoLink
 
       output += `
