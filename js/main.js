@@ -1,3 +1,21 @@
+function showPublisher(publisherSource) {
+  if (publisherSource !== undefined) {
+    return `<p>Publisher: ${publisherSource}</p>`;
+  }
+  else {
+    return "<p>No publisher listed</p>";
+  };
+};
+
+function showImage(imageSource) {
+  if (imageSource !== undefined) {
+    return `<img src=${imageSource}>`;
+  }
+  else {
+    return "<p>No image available</p>";
+  };
+};
+
 function displayResults(sourceData) {
   let output = "<h2>Results</h2>"
 
@@ -12,9 +30,9 @@ function displayResults(sourceData) {
       output += `
         <div>
           <h3>${title}</h3>
-          <p>Authors: ${authors}</p>
-          <p>Publisher: ${publisher !== undefined ? publisher : "No publisher listed"}</p>
-          <img src=${imageUrl}>
+          <p>Author(s): ${authors}</p>
+          ${showPublisher(publisher)}
+          ${showImage(imageUrl)}
           <p><a href=${moreInfoLink}>More Information</a></p>
         </div>
       `;
@@ -22,10 +40,10 @@ function displayResults(sourceData) {
   }
 
   else {
-    output += '<h3>No Results</h3>'
+    output += "<h3>No Results</h3>"
   };
 
-  document.getElementById('results').innerHTML = output
+  document.getElementById("results").innerHTML = output
 };
 
 function fetchData(source) {
@@ -39,9 +57,9 @@ function fetchData(source) {
   .catch((error) => console.log(error))
 };
 
-document.getElementById('book-search').addEventListener('submit', function() {
+document.getElementById("book-search").addEventListener("submit", function() {
   event.preventDefault();
-  let search = document.getElementById('search').value
+  let search = document.getElementById("search").value
   let url = "https://www.googleapis.com/books/v1/volumes?q=" + search
 
   fetchData(url);
