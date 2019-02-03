@@ -48,7 +48,7 @@ function displayResults(sourceData) {
       let moreInfoLink = result.volumeInfo.infoLink
 
       output += `
-        <div>
+        <div class="item-listing">
           <h3>${title}</h3>
           ${showAuthors(authors)}
           ${showPublisher(publisher)}
@@ -60,7 +60,7 @@ function displayResults(sourceData) {
   }
 
   else {
-    output += "<h3>No Results</h3>"
+    output += "<h3 class='no-results'>No Results</h3>"
   };
 
   document.getElementById("results").innerHTML = output
