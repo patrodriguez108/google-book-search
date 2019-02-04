@@ -2,7 +2,7 @@ function showAuthors(authorSource) {
   if (authorSource.length > 1) {
     let authorsDisplay = "<p>Authors:</p>";
 
-    authorSource.forEach(function(author) {
+    authorSource.forEach((author) => {
       authorsDisplay += `<p>${author}</p>`
     });
 
@@ -44,7 +44,7 @@ function displayResults(sourceData) {
   let output = "<h2>Results</h2>"
 
   if (sourceData !== undefined) {
-    sourceData.forEach(function(result) {
+    sourceData.forEach((result) => {
       let title = result.volumeInfo.title
       let authors = result.volumeInfo.authors
       let publisher = result.volumeInfo.publisher
