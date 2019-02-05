@@ -1,21 +1,25 @@
 function showAuthors(authorSource) {
-  if (authorSource !== undefined) {
-    if (authorSource.length > 1) {
-      let authorsDisplay = "<p>Authors:</p>";
+  if (authorSource.length > 1) {
+    let authorsDisplay = "<p>Authors:</p>";
 
-      authorSource.forEach(function(author) {
-        authorsDisplay += `<p>${author}</p>`
-      });
+    authorSource.forEach((author) => {
+      authorsDisplay += `<p>${author}</p>`
+    });
 
-      return authorsDisplay;
-    }
-    else {
-      return `<p>Author: ${authorSource}</p>`;
-    };
+    return authorsDisplay;
+  }
+  else {
+    return `<p>Author: ${authorSource}</p>`;
+  };
+};
+
+function authorListing(bookWriter) {
+  if (bookWriter !== undefined) {
+    return showAuthors(bookWriter);
   }
   else {
     return "<p>No author listed</p>"
-  }
+  };
 };
 
 function showPublisher(publisherSource) {
@@ -40,7 +44,7 @@ function displayResults(sourceData) {
   let output = "<h2>Results</h2>"
 
   if (sourceData !== undefined) {
-    sourceData.forEach(function(result) {
+    sourceData.forEach((result) => {
       let title = result.volumeInfo.title
       let authors = result.volumeInfo.authors
       let publisher = result.volumeInfo.publisher
@@ -50,13 +54,13 @@ function displayResults(sourceData) {
       output += `
         <div class="item-listing">
           <h3>${title}</h3>
-          ${showAuthors(authors)}
+          ${authorListing(authors)}
           ${showPublisher(publisher)}
           ${showImage(imageUrl)}
           <p><a href=${moreInfoLink}>More Information</a></p>
         </div>
       `;
-    })
+    });
   }
 
   else {
